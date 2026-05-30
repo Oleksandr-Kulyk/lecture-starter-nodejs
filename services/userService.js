@@ -1,6 +1,18 @@
 import { userRepository } from "../repositories/userRepository.js";
 
 class UserService {
+  isSameValue(firstValue, secondValue) {
+    return firstValue.toLowerCase() === secondValue.toLowerCase();
+  }
+
+  getByEmail(email) {
+    return this.getAll().find((user) => this.isSameValue(user.email, email));
+  }
+
+  getByPhone(phone) {
+    return this.getAll().find((user) => this.isSameValue(user.phone, phone));
+  }
+
   getAll() {
     return userRepository.getAll();
   }
@@ -14,6 +26,14 @@ class UserService {
   }
 
   create(data) {
+    if (this.getByEmail(data.email)) {
+      throw new Error("User with this email already exists");
+    }
+
+    if (this.getByPhone(data.phone)) {
+      throw new Error("User with this phone already exists");
+    }
+
     return userRepository.create(data);
   }
 

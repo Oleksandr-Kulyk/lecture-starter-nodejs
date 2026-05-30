@@ -49,6 +49,10 @@ router.post(
   createFighterValid,
   (req, res, next) => {
     try {
+      if (res.err) {
+        return next();
+      }
+
       res.data = fighterService.create(req.body);
     } catch (err) {
       res.err = err;
