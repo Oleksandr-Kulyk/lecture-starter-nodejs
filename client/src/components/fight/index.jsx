@@ -3,11 +3,13 @@ import { Box, Button, Divider, Paper } from '@mui/material';
 import { getFighters } from '../../services/domainRequest/fightersRequest';
 import NewFighter from '../newFighter';
 import Fighter from '../fighter';
+import FightArena from '../fightArena';
 
-export default function Fight() {
+export default function Fight({ onArenaVisibleChange }) {
     const [fighters, setFighters] = useState([]);
     const [fighter1, setFighter1] = useState(null);
     const [fighter2, setFighter2] = useState(null);
+    const [isArenaVisible, setIsArenaVisible] = useState(false);
 
     useEffect(() => {
         getFighters().then((data) => {
@@ -17,12 +19,25 @@ export default function Fight() {
         });
     }, []);
 
+    useEffect(() => {
+        onArenaVisibleChange?.(isArenaVisible);
+    }, [isArenaVisible, onArenaVisibleChange]);
+
     const onCreate = (fighter) => {
         setFighters((prev) => [...prev, fighter]);
     };
 
     const fighter1List = fighter2 ? fighters.filter((f) => f.id !== fighter2.id) : fighters;
     const fighter2List = fighter1 ? fighters.filter((f) => f.id !== fighter1.id) : fighters;
+
+    if (isArenaVisible) {
+        return (
+            <FightArena
+                firstFighter={fighter1}
+                secondFighter={fighter2}
+            />
+        );
+    }
 
     return (
         <Box sx={{ mt: 4 }}>
@@ -31,7 +46,12 @@ export default function Fight() {
                 <Fighter selectedFighter={fighter1} onFighterSelect={setFighter1} fightersList={fighter1List} />
                 <Divider orientation="vertical" flexItem />
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', px: 2, pt: 2 }}>
-                    <Button variant="contained" color="secondary" disabled={!fighter1 || !fighter2}>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        disabled={!fighter1 || !fighter2}
+                        onClick={() => setIsArenaVisible(true)}
+                    >
                         Start Fight
                     </Button>
                 </Box>

@@ -6,6 +6,7 @@ import SignOut from '../signOut';
 
 export default function StartScreen() {
     const [loggedIn, setLoggedIn] = useState(isSignedIn());
+    const [arenaVisible, setArenaVisible] = useState(false);
 
     if (!loggedIn) {
         return <SignInUpPage setIsLoggedIn={setLoggedIn} />;
@@ -13,8 +14,10 @@ export default function StartScreen() {
 
     return (
         <>
-            <Fight />
-            <SignOut isSignedIn={loggedIn} onSignOut={() => setLoggedIn(false)} />
+            <Fight onArenaVisibleChange={setArenaVisible} />
+            {!arenaVisible && (
+                <SignOut isSignedIn={loggedIn} onSignOut={() => setLoggedIn(false)} />
+            )}
         </>
     );
 }
