@@ -49,6 +49,10 @@ router.post(
   createUserValid,
   (req, res, next) => {
     try {
+      if (res.err) {
+        return next();
+      }
+
       res.data = userService.create(req.body);
     } catch (err) {
       res.err = err;
