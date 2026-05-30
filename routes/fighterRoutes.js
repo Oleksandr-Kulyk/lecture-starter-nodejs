@@ -68,6 +68,10 @@ router.patch(
   updateFighterValid,
   (req, res, next) => {
     try {
+      if (res.err) {
+        return next();
+      }
+
       const fighter = fighterService.update(req.params.id, req.body);
 
       if (!fighter) {

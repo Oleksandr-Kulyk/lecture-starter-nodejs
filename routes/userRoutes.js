@@ -68,6 +68,10 @@ router.patch(
   updateUserValid,
   (req, res, next) => {
     try {
+      if (res.err) {
+        return next();
+      }
+
       const user = userService.update(req.params.id, req.body);
 
       if (!user) {
