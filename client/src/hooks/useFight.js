@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useReducer, useRef } from 'react';
 import controls from '../constants/controls';
+import { CRITICAL_HIT_COOLDOWN } from '../constants/fight';
 import { getCriticalDamage, getDamage } from '../helpers/fightHelper';
-
-const CRITICAL_HIT_COOLDOWN = 10000;
 
 const FIGHT_ACTIONS = {
     ATTACK: 'attack',
@@ -242,6 +241,16 @@ export default function useFight(firstFighter, secondFighter) {
     useEffect(() => {
         const pressedKeys = pressedKeysRef.current;
         const criticalHitTimeouts = criticalHitTimeoutsRef.current;
+        const clearFightEffects = () => {
+            pressedKeys.clear();
+            clearTimeout(criticalHitTimeouts.first);
+            clearTimeout(criticalHitTimeouts.second);
+        };
+
+        if (fightState.winner) {
+            clearFightEffects();
+            return undefined;
+        }
 
         const onKeyDown = (event) => {
             pressedKeys.add(event.code);
@@ -299,11 +308,9 @@ export default function useFight(firstFighter, secondFighter) {
         return () => {
             document.removeEventListener('keydown', onKeyDown);
             document.removeEventListener('keyup', onKeyUp);
-            pressedKeys.clear();
-            clearTimeout(criticalHitTimeouts.first);
-            clearTimeout(criticalHitTimeouts.second);
+            clearFightEffects();
         };
-    }, [attack, isCombinationPressed, performCriticalHit, setBlockActive]);
+    }, [attack, fightState.winner, isCombinationPressed, performCriticalHit, setBlockActive]);
 
     return {
         firstFighterState: fightState.first,

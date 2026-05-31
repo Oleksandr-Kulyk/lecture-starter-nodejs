@@ -59,6 +59,40 @@
   transition: width 180ms ease-out;
 }
 
+.arena___critical-hit-indicator {
+  width: 100%;
+  height: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  border-radius: 4px;
+  margin-top: 5px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.arena___critical-hit-bar {
+  width: 100%;
+  height: 100%;
+  background-color: #f6c445;
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.arena___critical-hit-bar--cooldown {
+  animation-name: critical-hit-cooldown;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes critical-hit-cooldown {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
 .arena___versus-sign {
   min-width: 74px;
   margin-top: 25px;
@@ -92,6 +126,25 @@
 
 .arena___right-fighter img {
   transform: scaleX(-1);
+}
+
+.winner-modal___body {
+  min-width: 260px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.winner-modal___image {
+  max-width: 220px;
+  max-height: 220px;
+  object-fit: contain;
+}
+
+.winner-modal___name {
+  font-size: 28px !important;
+  font-weight: 800 !important;
 }
 
 @media (max-width: 760px) {

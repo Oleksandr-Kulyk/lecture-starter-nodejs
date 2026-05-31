@@ -35,6 +35,7 @@ export default function Fight({ onArenaVisibleChange }) {
             <FightArena
                 firstFighter={fighter1}
                 secondFighter={fighter2}
+                onFightEnd={() => setIsArenaVisible(false)}
             />
         );
     }
