@@ -1,5 +1,6 @@
 const MIN_DAMAGE_MULTIPLIER = 1;
 const MAX_DAMAGE_MULTIPLIER = 2;
+const CRITICAL_DAMAGE_MULTIPLIER = 2;
 
 const getRandomMultiplier = () => {
     return Math.random() * (MAX_DAMAGE_MULTIPLIER - MIN_DAMAGE_MULTIPLIER) + MIN_DAMAGE_MULTIPLIER;
@@ -19,4 +20,8 @@ const getDamage = (attacker, defender) => {
     return Math.max(damage, 0);
 };
 
-export { getHitPower, getBlockPower, getDamage };
+const getCriticalDamage = (fighter) => {
+    return fighter.power * CRITICAL_DAMAGE_MULTIPLIER;
+};
+
+export { getHitPower, getBlockPower, getDamage, getCriticalDamage };
