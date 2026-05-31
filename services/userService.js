@@ -42,6 +42,23 @@ class UserService {
     if (!item) {
       return null;
     }
+
+    if (dataToUpdate.email) {
+      const userWithSameEmail = this.getByEmail(dataToUpdate.email);
+
+      if (userWithSameEmail && userWithSameEmail.id !== id) {
+        throw new Error("User with this email already exists");
+      }
+    }
+
+    if (dataToUpdate.phone) {
+      const userWithSamePhone = this.getByPhone(dataToUpdate.phone);
+
+      if (userWithSamePhone && userWithSamePhone.id !== id) {
+        throw new Error("User with this phone already exists");
+      }
+    }
+
     return userRepository.update(id, dataToUpdate);
   }
 

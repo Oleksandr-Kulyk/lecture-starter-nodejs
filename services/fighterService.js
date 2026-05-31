@@ -1,6 +1,14 @@
 import { fighterRepository } from "../repositories/fighterRepository.js";
 
 class FighterService {
+  isSameValue(firstValue, secondValue) {
+    return firstValue.toLowerCase() === secondValue.toLowerCase();
+  }
+
+  getByName(name) {
+    return this.getAll().find((fighter) => this.isSameValue(fighter.name, name));
+  }
+
   getAll() {
     return fighterRepository.getAll();
   }
@@ -14,6 +22,10 @@ class FighterService {
   }
 
   create(data) {
+    if (this.getByName(data.name)) {
+      throw new Error("Fighter with this name already exists");
+    }
+
     return fighterRepository.create(data);
   }
 
@@ -22,6 +34,15 @@ class FighterService {
     if (!item) {
       return null;
     }
+
+    if (dataToUpdate.name) {
+      const fighterWithSameName = this.getByName(dataToUpdate.name);
+
+      if (fighterWithSameName && fighterWithSameName.id !== id) {
+        throw new Error("Fighter with this name already exists");
+      }
+    }
+
     return fighterRepository.update(id, dataToUpdate);
   }
 
