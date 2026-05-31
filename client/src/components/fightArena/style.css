@@ -1,0 +1,181 @@
+.arena___root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  min-height: calc(100svh - 32px);
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(12, 16, 24, 0.15), rgba(12, 16, 24, 0.35)),
+    url('../../assets/arena.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.arena___fight-status {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+  padding: 20px 28px 0;
+}
+
+.arena___fighter-indicator {
+  width: min(42%, 420px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.arena___fighter-indicator--blocking .arena___fighter-name {
+  color: #8fe3ff;
+}
+
+.arena___fighter-name {
+  color: #ffffff;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #111111;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  margin-bottom: 6px !important;
+}
+
+.arena___health-indicator {
+  width: 100%;
+  height: 25px;
+  border: 2px solid #111111;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.28);
+}
+
+.arena___health-bar {
+  width: 100%;
+  height: 100%;
+  background-color: #ebd759;
+  transition: width 180ms ease-out;
+}
+
+.arena___critical-hit-indicator {
+  width: 100%;
+  height: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  border-radius: 4px;
+  margin-top: 5px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.arena___critical-hit-bar {
+  width: 100%;
+  height: 100%;
+  background-color: #f6c445;
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.arena___critical-hit-bar--cooldown {
+  animation-name: critical-hit-cooldown;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes critical-hit-cooldown {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.arena___versus-sign {
+  min-width: 74px;
+  margin-top: 25px;
+  color: #ffffff;
+  font-size: 44px;
+  font-weight: 900;
+  line-height: 1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.arena___battlefield {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 48px;
+  padding: 0 40px 56px;
+}
+
+.arena___fighter {
+  min-width: 220px;
+  display: flex;
+  justify-content: center;
+}
+
+.arena___fighter img {
+  height: min(52svh, 520px);
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 12px rgba(0, 0, 0, 0.45));
+}
+
+.arena___right-fighter img {
+  transform: scaleX(-1);
+}
+
+.winner-modal___body {
+  min-width: 260px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.winner-modal___image {
+  max-width: 220px;
+  max-height: 220px;
+  object-fit: contain;
+}
+
+.winner-modal___name {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+}
+
+@media (max-width: 760px) {
+  .arena___fight-status {
+    gap: 10px;
+    padding: 18px 10px 0;
+  }
+
+  .arena___fighter-indicator {
+    width: 42%;
+  }
+
+  .arena___fighter-name {
+    font-size: 18px !important;
+  }
+
+  .arena___versus-sign {
+    min-width: 44px;
+    font-size: 28px;
+  }
+
+  .arena___battlefield {
+    gap: 12px;
+    padding: 0 12px 36px;
+  }
+
+  .arena___fighter {
+    min-width: 120px;
+  }
+
+  .arena___fighter img {
+    height: min(42svh, 320px);
+  }
+}
